@@ -1,7 +1,11 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:to_do_list_app/constant.dart';
-import 'package:to_do_list_app/screens/widgets.dart';
+import 'package:to_do_list_app/screens/task_listing_screen.dart';
+import 'package:to_do_list_app/widgets/widgets.dart';
+import 'package:to_do_list_app/models/models.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -11,6 +15,13 @@ class TaskScreen extends StatefulWidget {
 }
 
 var checkedValue;
+ List<task> tasks=[
+task(title: "buy a book"),
+task(title: "study a tech"),
+task(title: "coffiee"),
+task(title: "run daily")
+
+ ];
 
 class _TaskScreenState extends State<TaskScreen> {
   @override
@@ -20,73 +31,83 @@ class _TaskScreenState extends State<TaskScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
           backgroundColor: kMainAppClr,
-          child: Icon(
+          child: const Icon(
             Icons.add,
             color: Colors.white,
           ),
-          onPressed: () {}),
-      body: SafeArea(
-          child: Column(
-        children: [
-          ClipPath(
-            clipper: CurveClipper(),
-            child: Container(
-              height: hght * .4,
-              width: width,
-              color: kMainAppClr,
-              padding: EdgeInsets.only(right: 0, top: 60, left: 0, bottom: 0),
-              child: Column(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(90)),
-                    height: 120,
-                    width: 120,
-                    child: Icon(Icons.list, size: 40, color: kMainAppClr),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    "TickTick",
-                    style: GoogleFonts.alike(
-                        textStyle: Theme.of(context).textTheme.displayMedium,
-                        color: Colors.white,
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    "12 Tasks is Pending",
-                    style: GoogleFonts.alike(
-                        textStyle: Theme.of(context).textTheme.displayMedium,
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
+          onPressed: () {
+            showModalBottomSheet(
+                isScrollControlled: false,
+                context: context,
+                builder: (BuildContext context) =>  AddTaskScreen( taskTitle: (newtitle) {  
+                  setState(() {
+                   tasks.add(task(title:newtitle ));
+                  });
+                  Navigator.pop(context);
+                },));
+          }),
+      body: SingleChildScrollView(
+        child: SafeArea(
+            child: Column(
+          children: [
+            ClipPath(
+              clipper: CurveClipper(),
+              child: Container(
+                height: hght * .4,
+                width: width,
+                color: kMainAppClr,
+                padding: EdgeInsets.only(right: 0, top: 60, left: 0, bottom: 0),
+                child: Column(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(90)),
+                      height: 120,
+                      width: 120,
+                      child: Icon(Icons.list, size: 40, color: kMainAppClr),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      "TickTick",
+                      style: GoogleFonts.alike(
+                          textStyle: Theme.of(context).textTheme.displayMedium,
+                          color: Colors.white,
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      tasks.length.toString(),
+                      style: GoogleFonts.alike(
+                          textStyle: Theme.of(context).textTheme.displayMedium,
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          //////
-          const TaskBottom(),
-        ],
-      )),
+            const SizedBox(
+              height: 10,
+            ),
+            //////
+           TaskBottom(tasks),
+          ],
+        )),
+      ),
     );
   }
 }
-
-
 
 //bottom curve
 
