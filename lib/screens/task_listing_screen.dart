@@ -5,18 +5,16 @@
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do_list_app/constant.dart';
 import 'package:to_do_list_app/models/models.dart';
 
-class TaskBottom extends StatefulWidget{
+class TaskBottom extends StatelessWidget{
  
-final List<task> tasks;
-TaskBottom(this.tasks);
-  @override
-  State<TaskBottom> createState() => _TaskBottomState();
-}
 
-class _TaskBottomState extends State<TaskBottom> {
+
+
+
 
 
   @override
@@ -29,21 +27,26 @@ class _TaskBottomState extends State<TaskBottom> {
     //     print(isCheckedState);
     //   });     
     // }
-    return   ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: widget.tasks.length,
-        itemBuilder: (BuildContext context, int index) {
-          return TaskTile(isCheckedState:widget. tasks[index].isDone, taskTitle: widget.tasks[index].title,
-          checkCallBack:  (cheackBoxState){
-      setState(() {
-       widget. tasks[index].toggleDone();
-     
-      });     
-     }
-     );
-        });
+    return   Consumer<DataModel>(
+      builder: (context, modelData, child) {
+        return ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: modelData.tasks.length,
+          itemBuilder: (BuildContext context, int index) {
+            return TaskTile(isCheckedState:modelData.tasks[index].isDone, taskTitle: modelData.tasks[index].title,
+            checkCallBack:  (cheackBoxState){
+      //   setState(() {
+      //  // Provider.of<DataModel>(context).tasks[index].toggleDone();
+       
+      //   });     
+       }
+       );
+          });
+      },
+ 
+    );
   }
 }
 
@@ -76,13 +79,15 @@ class TaskTile extends StatelessWidget {
             child: ListTile(
                 title: Text(
                   taskTitle,
-                  style: GoogleFonts.alike(
-                      textStyle:
-                          Theme.of(context).textTheme.displayMedium,
-                      color: Colors.white,
+                  style: 
+                      TextStyle(
+ color: Colors.white,
                       decoration:TextDecoration.lineThrough,
                       fontSize: 18,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.bold
+                      )
+                        
+                     
                 ),
                 trailing: Checkbox(
       value: isCheckedState,

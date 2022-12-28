@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_list_app/models/models.dart';
 import 'package:to_do_list_app/screens/taskscreen.dart';
 
 void main() {
@@ -11,15 +13,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-    checkboxTheme: CheckboxThemeData(
-      checkColor: MaterialStateProperty.all(Colors.yellow),
-      fillColor: MaterialStateProperty.all(Colors.white),
-    )
-  ),
-    
-      home: const TaskScreen(),
+    return ChangeNotifierProvider(
+      create: (BuildContext context)=>DataModel(),
+      child: MaterialApp(
+        theme: ThemeData(
+      checkboxTheme: CheckboxThemeData(
+        checkColor: MaterialStateProperty.all(Colors.yellow),
+        fillColor: MaterialStateProperty.all(Colors.white),
+      )
+      ),
+      
+        home: const TaskScreen(),
+      ),
     );
   }
 }

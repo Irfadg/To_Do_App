@@ -2,11 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do_list_app/constant.dart';
+import 'package:to_do_list_app/models/models.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  final Function taskTitle;
-  const AddTaskScreen({super.key, required this.taskTitle});
+ 
 
 
   @override
@@ -53,8 +54,10 @@ class AddTaskScreen extends StatelessWidget {
               height: 45,
               color: kMainAppClr,
               onPressed: () {
-                print(taskTextController.text);
-                taskTitle(taskTextController.text);
+                Provider.of<DataModel>(context,listen: false).AddTaskIntoList(taskTextController.text);
+                 print(taskTextController.text);
+                // taskTitle(taskTextController.text);
+                Navigator.pop(context);
               },
               child: const Text('ADD'),
               minWidth: 150,

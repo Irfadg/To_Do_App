@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do_list_app/constant.dart';
 import 'package:to_do_list_app/screens/task_listing_screen.dart';
 import 'package:to_do_list_app/widgets/widgets.dart';
@@ -15,13 +16,7 @@ class TaskScreen extends StatefulWidget {
 }
 
 var checkedValue;
- List<task> tasks=[
-task(title: "buy a book"),
-task(title: "study a tech"),
-task(title: "coffiee"),
-task(title: "run daily")
 
- ];
 
 class _TaskScreenState extends State<TaskScreen> {
   @override
@@ -39,12 +34,8 @@ class _TaskScreenState extends State<TaskScreen> {
             showModalBottomSheet(
                 isScrollControlled: false,
                 context: context,
-                builder: (BuildContext context) =>  AddTaskScreen( taskTitle: (newtitle) {  
-                  setState(() {
-                   tasks.add(task(title:newtitle ));
-                  });
-                  Navigator.pop(context);
-                },));
+                builder: (BuildContext context) =>  AddTaskScreen() 
+            );
           }),
       body: SingleChildScrollView(
         child: SafeArea(
@@ -86,11 +77,11 @@ class _TaskScreenState extends State<TaskScreen> {
                       height: 5,
                     ),
                     Text(
-                      tasks.length.toString(),
+                     "${Provider.of<DataModel>(context).tasks.length.toString()} Tasks",
                       style: GoogleFonts.alike(
                           textStyle: Theme.of(context).textTheme.displayMedium,
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -101,7 +92,7 @@ class _TaskScreenState extends State<TaskScreen> {
               height: 10,
             ),
             //////
-           TaskBottom(tasks),
+           TaskBottom(),
           ],
         )),
       ),
