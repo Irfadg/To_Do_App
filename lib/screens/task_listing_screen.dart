@@ -10,13 +10,6 @@ import 'package:to_do_list_app/constant.dart';
 import 'package:to_do_list_app/models/models.dart';
 
 class TaskBottom extends StatelessWidget{
- 
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
   
@@ -34,14 +27,19 @@ class TaskBottom extends StatelessWidget{
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           itemCount: modelData.tasks.length,
+          
           itemBuilder: (BuildContext context, int index) {
-            return TaskTile(isCheckedState:modelData.tasks[index].isDone, taskTitle: modelData.tasks[index].title,
+            return TaskTile(
+        
+              
+              isCheckedState:modelData.tasks[index].isDone, taskTitle: modelData.tasks[index].title,
             checkCallBack:  (cheackBoxState){
-      //   setState(() {
-      //  // Provider.of<DataModel>(context).tasks[index].toggleDone();
-       
-      //   });     
-       }
+              modelData.changeTaskState(modelData.tasks[index]);
+       }, 
+
+      //  longPresscheckCallBack: {
+      //   modelData.deleteTaskFromList(modelData.tasks[index])
+      //  } ,
        );
           });
       },
@@ -60,7 +58,10 @@ class TaskTile extends StatelessWidget {
   
   final  bool isCheckedState;
   final String taskTitle;
+  // ignore: prefer_typing_uninitialized_variables
   final  checkCallBack;
+  // ignore: prefer_typing_uninitialized_variables
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,12 +78,14 @@ class TaskTile extends StatelessWidget {
           ),
           child: Center(
             child: ListTile(
+           
+            //  onLongPress: longPresscheckCallBack,
                 title: Text(
                   taskTitle,
                   style: 
                       TextStyle(
  color: Colors.white,
-                      decoration:TextDecoration.lineThrough,
+                      decoration:isCheckedState? TextDecoration.lineThrough:null,
                       fontSize: 18,
                       fontWeight: FontWeight.bold
                       )

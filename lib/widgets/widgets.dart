@@ -55,7 +55,7 @@ class AddTaskScreen extends StatelessWidget {
               color: kMainAppClr,
               onPressed: () {
                 Provider.of<DataModel>(context,listen: false).AddTaskIntoList(taskTextController.text);
-                 print(taskTextController.text);
+                 //print(taskTextController.text);
                 // taskTitle(taskTextController.text);
                 Navigator.pop(context);
               },

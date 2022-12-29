@@ -2,6 +2,7 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:to_do_list_app/screens/taskscreen.dart';
 
 class DataModel extends ChangeNotifier{
 
@@ -18,6 +19,18 @@ task(title: "run daily")
   tasks.add(newData);
   notifyListeners();
 }
+
+void changeTaskState(task task){
+  task.toggleDone();
+  notifyListeners();
+}
+
+// void deleteTaskFromList(task task) async{
+//   print("irfad");
+//    await tasks.remove(task);
+//   //notifyListeners();
+
+// }
 }
 
 class task{
